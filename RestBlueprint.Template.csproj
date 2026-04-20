@@ -1,0 +1,83 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    REST Blueprint — Template Pack Project
+    =======================================
+    This project produces the NuGet template package.
+
+    Install from NuGet.org (once published):
+        dotnet new install RestBlueprint.Template
+
+    Scaffold a new project:
+        dotnet new rest-blueprint -n MyApi
+
+    Build the package locally:
+        dotnet pack RestBlueprint.Template.csproj -c Release -o nupkg
+
+    Test locally before publishing:
+        dotnet new install ./nupkg/RestBlueprint.Template.1.0.0.nupkg
+        dotnet new rest-blueprint -n MyApp -o ./MyApp
+        dotnet build MyApp/MyApp.Api.csproj
+
+    Uninstall local test package:
+        dotnet new uninstall RestBlueprint.Template
+  -->
+
+  <PropertyGroup>
+    <PackageId>RestBlueprint.Template</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Title>REST Blueprint</Title>
+    <Authors>REST Blueprint Contributors</Authors>
+    <Description>A production-ready .NET 10 Minimal API template with the IEndpoint pattern, FluentValidation, OpenAPI, Scalar, JWT auth, API versioning, output caching (in-memory/Redis), rate limiting, SSE, Serilog, and Problem Details.</Description>
+    <PackageTags>dotnet;dotnet-new;template;minimal-api;rest;api;aspnetcore;webapi;blueprint</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/your-org/rest-blueprint</PackageProjectUrl>
+    <Copyright>Copyright © 2026 REST Blueprint Contributors</Copyright>
+    <PackageReleaseNotes>See https://github.com/your-org/rest-blueprint/releases</PackageReleaseNotes>
+
+    <!-- Template pack — content only, no compiler output -->
+    <PackageType>Template</PackageType>
+    <IsPackable>true</IsPackable>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+
+    <!--
+      NoDefaultExcludes=true is REQUIRED.
+      Without it, MSBuild silently drops hidden directories (like .template.config/)
+      from the NuGet package, which breaks `dotnet new install`.
+    -->
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+
+    <!-- Suppress build warnings — this project contains no C# source to compile -->
+    <TargetFramework>net10.0</TargetFramework>
+    <!--
+      NU5128: template packages intentionally have no lib/ref assemblies.
+      This warning is expected and must be suppressed here.
+    -->
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Prevent MSBuild from trying to compile template source files -->
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Template engine manifest — must land under content/ in the nupkg -->
+    <Content Include=".template.config\**" />
+
+    <!-- Template source tree (bin/ and obj/ excluded) -->
+    <Content Include="RestBlueprint.Api\**" Exclude="RestBlueprint.Api\**\bin\**;RestBlueprint.Api\**\obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      README is shown on the nuget.org package page but is NOT scaffolded into
+      user projects (it is excluded in template.json sources.exclude).
+    -->
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

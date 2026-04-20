@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "REST Blueprint",
+  "classifications": ["REST", "Web API", "Minimal API", "Blueprint"],
+  "name": "REST Blueprint",
+  "shortName": "rest-blueprint",
+  "description": "A production-ready .NET 10 Minimal API template with IEndpoint pattern, FluentValidation, OpenAPI, Scalar, JWT auth, API versioning, output caching (in-memory/Redis), rate limiting, SSE, Serilog, and Problem Details.",
+  "identity": "RestBlueprint.Template",
+  "sourceName": "RestBlueprint",
+  "preferNameDirectory": true,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+    "Framework": {
+      "type": "parameter",
+      "description": "The target framework for the project.",
+      "datatype": "choice",
+      "choices": [
+        {
+          "choice": "net10.0",
+          "description": ".NET 10 (recommended)"
+        }
+      ],
+      "defaultValue": "net10.0",
+      "replaces": "net10.0"
+    }
+  },
+  "sources": [
+    {
+      "source": "./RestBlueprint.Api",
+      "target": "./",
+      "exclude": [
+        "bin/**",
+        "obj/**"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>RestBlueprint.Api</RootNamespace>
+    <AssemblyName>RestBlueprint.Api</AssemblyName>
+    <UserSecretsId>rest-blueprint-dev-secrets</UserSecretsId>
+    <!--
+      TEMPLATE NOTE:
+      The template engine substitutes "RestBlueprint" with the name you supply
+      to dotnet new rest-blueprint (via the -n / -o options) automatically.
+    -->
+
+    <!-- Code quality -->
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <!-- CS8618: non-nullable field may be uninitialized — common in EF Core entities
+         CS8600: null-to-non-null assignment — common when reading untyped config
+         CS8603: possible null reference return — tolerated in thin mapping code   -->
+    <NoWarn>$(NoWarn);CS8618;CS8600;CS8603</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- API versioning -->
+    <PackageReference Include="Asp.Versioning.Http"                                   Version="8.1.1" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer"                        Version="8.1.1" />
+
+    <!-- OpenAPI + Scalar interactive docs -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi"                          Version="10.0.5" />
+    <PackageReference Include="Scalar.AspNetCore"                                     Version="2.13.22" />
+
+    <!-- Output caching — falls back to in-memory when Redis connection string is absent -->
+    <PackageReference Include="Microsoft.AspNetCore.OutputCaching.StackExchangeRedis" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"       Version="10.0.5" />
+
+    <!-- JWT Bearer authentication — swap to Keycloak or ASP.NET Identity in AuthExtension.cs -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"         Version="10.0.5" />
+
+    <!-- Logging -->
+    <PackageReference Include="Serilog.AspNetCore"                                    Version="10.0.0" />
+
+    <!-- FluentValidation + DI integration -->
+    <PackageReference Include="FluentValidation"                                       Version="12.1.1" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions"         Version="12.1.1" />
+  </ItemGroup>
+
+</Project>

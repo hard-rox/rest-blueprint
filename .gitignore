@@ -1,0 +1,28 @@
+## .NET build output
+bin/
+obj/
+
+## User secrets & local overrides
+**/appsettings.*.json
+!**/appsettings.json
+!**/appsettings.Development.json
+
+## Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.suo
+.vscode/
+
+## NuGet
+*.nupkg
+*.snupkg
+nupkg/
+
+## Temp files
+*.tmp
+*.log
+
+## OS files
+.DS_Store
+Thumbs.db
